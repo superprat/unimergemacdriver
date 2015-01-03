@@ -1,7 +1,7 @@
 UniMerge mac driver
 =================
 
-Mac Git Driver for UniMerge
+Mac Git Driver for UniMerge[http://wiki.unity3d.com/index.php/UniMerge]
 
 Paste this file in the root Folder and make sure Assets Folder is also available in the Root Folder
 
