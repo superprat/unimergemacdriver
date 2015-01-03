@@ -11,6 +11,6 @@ Paste this file in the root Folder and make sure Assets Folder is also available
  	  name = Unity merge
   	driver = ../merge-unity.sh %O %A %B 
   	
-#TODDO
+#TO DO
 
 launch Unity and SceneMerge tool if Unity is not running
