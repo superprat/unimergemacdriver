@@ -10,7 +10,7 @@ Paste `merge-unity.sh` into the project's root folder and make sure the Assets F
 ```
 [merge "unity"]
  	name = Unity merge
-  	driver = ../merge-unity.sh %O %A %B
+  	driver = ../merge-unity.sh %A %B
 ```
   	
 ##TO DO
