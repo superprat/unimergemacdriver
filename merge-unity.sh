@@ -20,24 +20,56 @@
 # <Local .git folder>/config needs a custom git driver
 #[merge "unity"]
 #	name = Unity merge
-#	driver = ../merge-unity.sh %O %A %B 
+#	driver = ../merge-unity.sh %A %B 
 #
 #
 
 
 #Check number of arguments
-if [ "$#" -ne 3 ]; then
-  echo "Usage: [ShellScript] theirs.doc mine.doc base.doc"
+if [ "$#" -ne 2 ]; then
+  echo "Usage: [ShellScript] mine.doc theirs.doc"
   exit 1
 fi
 
-sTheirDoc=$1
-sMyDoc=$2
-sBaseDoc=$3
+sMyDoc=$1
+sTheirDoc=$2
+
+# Absolute path to this script, e.g. /home/user/bin/foo.sh
+Script=$(readlink -f "$0")
+# Absolute path this script is in, thus /home/user/bin
+ScriptPath=$(dirname "$Script")
+ProjectPath="${ScriptPath}/../"
+
+
+#If my doc is not in project path, copy to project
+if ["$sMyDoc" != "$ProjectPath*"]; then
+	if[-f "$sMyDoc"]; then
+		IFS='/' read -a sourceArray <<< "$sMyDoc"
+		if [-f "$ProjectPath${sourceArray[-1]}"]; then
+			echo "Cannot copy  $sMyDoc  to  $ProjectPath ${sourceArray[-1]}  because the destination file exists."
+		else
+			mv "$sMyDoc" "$ProjectPath${sourceArray[-1]}"
+		fi
+	fi
+fi
+
+
+#If their doc is not in project path, copy to project
+if ["$sTheirDoc" != "$ProjectPath*"]; then
+	if[-f "$sTheirDoc"]; then
+		IFS='/' read -a sourceArray <<< "$sTheirDoc"
+		if [-f "$ProjectPath${sourceArray[-1]}"]; then
+			echo "Cannot copy  $sTheirDoc  to  $ProjectPath ${sourceArray[-1]}  because the destination file exists."
+		else
+			mv "$sTheirDoc" "$ProjectPath${sourceArray[-1]}"
+		fi
+	fi
+fi
 
 PROCESSNAME="Unity"
 
 #Check if Unity is Running
+
 #Todo launch Unity and SceneMerge tool if Unity is not running
 case "$(ps aux | grep $PROCESSNAME | wc -l)" in
 
